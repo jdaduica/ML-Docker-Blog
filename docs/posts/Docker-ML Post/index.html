@@ -208,6 +208,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="benefits-for-machine-learning" class="level3">
 <h3 class="anchored" data-anchor-id="benefits-for-machine-learning">Benefits for Machine Learning</h3>
 <p>Docker offers many advantages for deploying machine learning models that make it a powerful tool for all data scientists: - Environment Consistency: Docker ensures that the environment in which the model is trained is identical to the environment where it will be deployed. - Simplified Dependency Management: Machine learning models often depend on many specific libraries and versions of Python. Docker makes it easy to ensure that these dependencies are consistent and available. - Scalability: Docker containers are lightweight, which makes it easier to scale applications horizontally, running multiple instances of a model to handle more requests.</p>
+<p><img src="Docker-associated-tools.jpg" alt="Docker Popularity" width="800"></p>
+<p>Source: <a href="https://www.neosofttech.com/blogs/docker-is-emerging-as-the-future-of-application-delivery/">Docker Application</a></p>
 </section>
 </section>
 <section id="setting-up-docker-for-machine-learning" class="level1">
@@ -237,6 +239,7 @@ RUN mamba clean --all -y -f
 RUN fix-permissions "${CONDA_DIR}"
 RUN fix-permissions "/home/${NB_USER}"</code></pre>
 <p>This Dockerfile starts with a Jupyter notebook base image and sets up the environment by installing dependencies from a conda lock file. For more information on Conda lock files, see <a href="https://github.com/conda/conda-lock">here</a>. In addition, it uses <code>mamba</code> which is a fast package manager. Dockerfiles can be customized to fit any environment, making them very flexible and versatile.</p>
+<p><img src="Docker workflow.png" class="img-fluid" alt="Docker Workflow Diagram"> Source: <a href="https://medium.com/@augustineozor/docker-workflow-b9fe71d32184">Docker Workflow</a></p>
 </section>
 </section>
 <section id="building-and-training-a-machine-learning-model-in-docker" class="level1">
@@ -245,7 +248,7 @@ RUN fix-permissions "/home/${NB_USER}"</code></pre>
 <h3 class="anchored" data-anchor-id="step-1-prepare-your-model-code">Step 1: Prepare Your Model Code</h3>
 <p>Now that Docker is set up, let’s move on to preparing our machine learning model! For this example, let’s build a simple model using the Iris dataset. We will train a RandomForestClassifier model using <code>sklearn</code>.</p>
 <p>Here’s the Python code for training the model:</p>
-<div id="1bb88f07" class="cell" data-execution_count="1">
+<div id="81e12af9" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
@@ -260,8 +263,8 @@ RUN fix-permissions "/home/${NB_USER}"</code></pre>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the model </span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># You can use any method to save the model, e.g., using pickle or directly saving as part of your application</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<style>#sk-container-id-7 {
+<div class="cell-output cell-output-display" data-execution_count="10">
+<style>#sk-container-id-10 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: black;
   --sklearn-color-line: gray;
@@ -291,15 +294,15 @@ RUN fix-permissions "/home/${NB_USER}"</code></pre>
   }
 }
 
-#sk-container-id-7 {
+#sk-container-id-10 {
   color: var(--sklearn-color-text);
 }
 
-#sk-container-id-7 pre {
+#sk-container-id-10 pre {
   padding: 0;
 }
 
-#sk-container-id-7 input.sk-hidden--visually {
+#sk-container-id-10 input.sk-hidden--visually {
   border: 0;
   clip: rect(1px 1px 1px 1px);
   clip: rect(1px, 1px, 1px, 1px);
@@ -311,7 +314,7 @@ RUN fix-permissions "/home/${NB_USER}"</code></pre>
   width: 1px;
 }
 
-#sk-container-id-7 div.sk-dashed-wrapped {
+#sk-container-id-10 div.sk-dashed-wrapped {
   border: 1px dashed var(--sklearn-color-line);
   margin: 0 0.4em 0.5em 0.4em;
   box-sizing: border-box;
@@ -319,7 +322,7 @@ RUN fix-permissions "/home/${NB_USER}"</code></pre>
   background-color: var(--sklearn-color-background);
 }
 
-#sk-container-id-7 div.sk-container {
+#sk-container-id-10 div.sk-container {
   /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
      but bootstrap.min.css set `[hidden] { display: none !important; }`
      so we also need the `!important` here to be able to override the
@@ -329,7 +332,7 @@ RUN fix-permissions "/home/${NB_USER}"</code></pre>
   position: relative;
 }
 
-#sk-container-id-7 div.sk-text-repr-fallback {
+#sk-container-id-10 div.sk-text-repr-fallback {
   display: none;
 }
 
@@ -345,14 +348,14 @@ div.sk-item {
 
 /* Parallel-specific style estimator block */
 
-#sk-container-id-7 div.sk-parallel-item::after {
+#sk-container-id-10 div.sk-parallel-item::after {
   content: "";
   width: 100%;
   border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
   flex-grow: 1;
 }
 
-#sk-container-id-7 div.sk-parallel {
+#sk-container-id-10 div.sk-parallel {
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -360,28 +363,28 @@ div.sk-item {
   position: relative;
 }
 
-#sk-container-id-7 div.sk-parallel-item {
+#sk-container-id-10 div.sk-parallel-item {
   display: flex;
   flex-direction: column;
 }
 
-#sk-container-id-7 div.sk-parallel-item:first-child::after {
+#sk-container-id-10 div.sk-parallel-item:first-child::after {
   align-self: flex-end;
   width: 50%;
 }
 
-#sk-container-id-7 div.sk-parallel-item:last-child::after {
+#sk-container-id-10 div.sk-parallel-item:last-child::after {
   align-self: flex-start;
   width: 50%;
 }
 
-#sk-container-id-7 div.sk-parallel-item:only-child::after {
+#sk-container-id-10 div.sk-parallel-item:only-child::after {
   width: 0;
 }
 
 /* Serial-specific style estimator block */
 
-#sk-container-id-7 div.sk-serial {
+#sk-container-id-10 div.sk-serial {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -399,14 +402,14 @@ clickable and can be expanded/collapsed.
 
 /* Pipeline and ColumnTransformer style (default) */
 
-#sk-container-id-7 div.sk-toggleable {
+#sk-container-id-10 div.sk-toggleable {
   /* Default theme specific background. It is overwritten whether we have a
   specific estimator or a Pipeline/ColumnTransformer */
   background-color: var(--sklearn-color-background);
 }
 
 /* Toggleable label */
-#sk-container-id-7 label.sk-toggleable__label {
+#sk-container-id-10 label.sk-toggleable__label {
   cursor: pointer;
   display: block;
   width: 100%;
@@ -416,7 +419,7 @@ clickable and can be expanded/collapsed.
   text-align: center;
 }
 
-#sk-container-id-7 label.sk-toggleable__label-arrow:before {
+#sk-container-id-10 label.sk-toggleable__label-arrow:before {
   /* Arrow on the left of the label */
   content: "▸";
   float: left;
@@ -424,13 +427,13 @@ clickable and can be expanded/collapsed.
   color: var(--sklearn-color-icon);
 }
 
-#sk-container-id-7 label.sk-toggleable__label-arrow:hover:before {
+#sk-container-id-10 label.sk-toggleable__label-arrow:hover:before {
   color: var(--sklearn-color-text);
 }
 
 /* Toggleable content - dropdown */
 
-#sk-container-id-7 div.sk-toggleable__content {
+#sk-container-id-10 div.sk-toggleable__content {
   max-height: 0;
   max-width: 0;
   overflow: hidden;
@@ -439,12 +442,12 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-7 div.sk-toggleable__content.fitted {
+#sk-container-id-10 div.sk-toggleable__content.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-7 div.sk-toggleable__content pre {
+#sk-container-id-10 div.sk-toggleable__content pre {
   margin: 0.2em;
   border-radius: 0.25em;
   color: var(--sklearn-color-text);
@@ -452,79 +455,79 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-7 div.sk-toggleable__content.fitted pre {
+#sk-container-id-10 div.sk-toggleable__content.fitted pre {
   /* unfitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-7 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+#sk-container-id-10 input.sk-toggleable__control:checked~div.sk-toggleable__content {
   /* Expand drop-down */
   max-height: 200px;
   max-width: 100%;
   overflow: auto;
 }
 
-#sk-container-id-7 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+#sk-container-id-10 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
   content: "▾";
 }
 
 /* Pipeline/ColumnTransformer-specific style */
 
-#sk-container-id-7 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-10 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-7 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-10 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator-specific style */
 
 /* Colorize estimator box */
-#sk-container-id-7 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-10 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-7 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-10 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
-#sk-container-id-7 div.sk-label label.sk-toggleable__label,
-#sk-container-id-7 div.sk-label label {
+#sk-container-id-10 div.sk-label label.sk-toggleable__label,
+#sk-container-id-10 div.sk-label label {
   /* The background is the default theme color */
   color: var(--sklearn-color-text-on-default-background);
 }
 
 /* On hover, darken the color of the background */
-#sk-container-id-7 div.sk-label:hover label.sk-toggleable__label {
+#sk-container-id-10 div.sk-label:hover label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
 /* Label box, darken color on hover, fitted */
-#sk-container-id-7 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+#sk-container-id-10 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator label */
 
-#sk-container-id-7 div.sk-label label {
+#sk-container-id-10 div.sk-label label {
   font-family: monospace;
   font-weight: bold;
   display: inline-block;
   line-height: 1.2em;
 }
 
-#sk-container-id-7 div.sk-label-container {
+#sk-container-id-10 div.sk-label-container {
   text-align: center;
 }
 
 /* Estimator-specific */
-#sk-container-id-7 div.sk-estimator {
+#sk-container-id-10 div.sk-estimator {
   font-family: monospace;
   border: 1px dotted var(--sklearn-color-border-box);
   border-radius: 0.25em;
@@ -534,18 +537,18 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-7 div.sk-estimator.fitted {
+#sk-container-id-10 div.sk-estimator.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
 /* on hover */
-#sk-container-id-7 div.sk-estimator:hover {
+#sk-container-id-10 div.sk-estimator:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-7 div.sk-estimator.fitted:hover {
+#sk-container-id-10 div.sk-estimator.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
@@ -632,7 +635,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
 /* "?"-specific style due to the `<a>` HTML tag */
 
-#sk-container-id-7 a.estimator_doc_link {
+#sk-container-id-10 a.estimator_doc_link {
   float: right;
   font-size: 1rem;
   line-height: 1em;
@@ -647,25 +650,25 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   border: var(--sklearn-color-unfitted-level-1) 1pt solid;
 }
 
-#sk-container-id-7 a.estimator_doc_link.fitted {
+#sk-container-id-10 a.estimator_doc_link.fitted {
   /* fitted */
   border: var(--sklearn-color-fitted-level-1) 1pt solid;
   color: var(--sklearn-color-fitted-level-1);
 }
 
 /* On hover */
-#sk-container-id-7 a.estimator_doc_link:hover {
+#sk-container-id-10 a.estimator_doc_link:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-3);
   color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
-#sk-container-id-7 a.estimator_doc_link.fitted:hover {
+#sk-container-id-10 a.estimator_doc_link.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</a></style><div id="sk-container-id-7" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestClassifier()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" checked=""><label for="sk-estimator-id-7" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;RandomForestClassifier<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.ensemble.RandomForestClassifier.html">?<span>Documentation for RandomForestClassifier</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>RandomForestClassifier()</pre></div> </div></div></div></div>
+</a></style><div id="sk-container-id-10" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestClassifier()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-10" type="checkbox" checked=""><label for="sk-estimator-id-10" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;RandomForestClassifier<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.ensemble.RandomForestClassifier.html">?<span>Documentation for RandomForestClassifier</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>RandomForestClassifier()</pre></div> </div></div></div></div>
 </div>
 </div>
 </section>
@@ -729,6 +732,14 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h1>Conclusion</h1>
 <p>In this blog post, we’ve learned how to build, train, and deploy a machine learning model using Docker. By containerizing your models and using Docker Compose, we can now maintain consistency, scalability, and easy deployment of the models we build! Docker makes it easier to move your model from a development environment to production, where it can serve real-world requests or be analyzed interactively.</p>
 <p>As data scientists, understanding deploying with Docker is important to ensuring that our models can provide value beyond our own computer and own notebook. By taking advantage of Docker and Docker Compose, you can focus more on the model and less on the complexities of managing different environments. Overall, if you’re deploying a simple machine learning model or a complex pipeline, Docker will be an important tool in deployment.</p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li>Docker Documentation: <a href="https://docs.docker.com/get-started/">Docker Get Started</a></li>
+<li>Docker Compose: <a href="https://docs.docker.com/compose/">Docker Compose Documenation</a></li>
+<li>Timbers, T. A., Ostblom, J., D’Andrea, F., Lourenzutti, R., &amp; Chen, D. (2025). <em>Reproducible and Trustworthy Workflows for Data Science</em>.</li>
+</ul>
 
 
 </section>

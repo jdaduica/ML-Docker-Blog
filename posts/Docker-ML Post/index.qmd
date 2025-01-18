@@ -27,6 +27,10 @@ dependencies are consistent and available.
 -	Scalability: Docker containers are lightweight, which makes it easier to scale applications horizontally, running multiple instances of a model to handle more
 requests.
 
+<img src="Docker-associated-tools.jpg" alt="Docker Popularity" width="800"/>
+
+Source: [Docker Application](https://www.neosofttech.com/blogs/docker-is-emerging-as-the-future-of-application-delivery/)
+
 
 # Setting Up Docker for Machine Learning
 ### Step 1: Install Docker
@@ -63,6 +67,10 @@ RUN fix-permissions "/home/${NB_USER}"
 ```
 
 This Dockerfile starts with a Jupyter notebook base image and sets up the environment by installing dependencies from a conda lock file. For more information on Conda lock files, see [here](https://github.com/conda/conda-lock). In addition, it uses `mamba` which is a fast package manager. Dockerfiles can be customized to fit any environment, making them very flexible and versatile.
+
+
+![Docker Workflow Diagram](Docker%20workflow.png)
+Source: [Docker Workflow](https://medium.com/@augustineozor/docker-workflow-b9fe71d32184)
 
 # Building and Training a Machine Learning Model in Docker
 
@@ -171,3 +179,8 @@ As data scientists, understanding deploying with Docker is important to ensuring
 By taking advantage of Docker and Docker Compose, you can focus more on the model and less on the complexities of managing different environments. Overall,
 if you're deploying a simple machine learning model or a complex pipeline, Docker will be an important tool in deployment.
 
+
+# References
+- Docker Documentation: [Docker Get Started](https://docs.docker.com/get-started/)
+- Docker Compose: [Docker Compose Documenation](https://docs.docker.com/compose/)
+- Timbers, T. A., Ostblom, J., D’Andrea, F., Lourenzutti, R., & Chen, D. (2025). *Reproducible and Trustworthy Workflows for Data Science*.
