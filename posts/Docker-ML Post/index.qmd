@@ -7,7 +7,7 @@ image: "Docker Image.jpg"
 ---
 
 # Introduction
-In today's machine learning (ML) world, building and training models is just one part of the process. A key challenge lies in deploying those models to production, where real users or systems can use them. During deployment, data scientists need to ensure consistency across environments, handling dependencies, and scaling the model to handle large volumes of requests. This is where Docker becomes an essential tool for data scientists to utilize. Docker
+In today's machine learning (ML) world, building and training models is just one part of the process. A key challenge is in deploying those models to production, where real users or systems can use them. During deployment, data scientists need to ensure consistency across environments, handling dependencies, and scaling the model to handle large volumes of requests. This is where Docker becomes an essential tool for data scientists to utilize. Docker
 helps create portable and importantly reproducible environments that make deploying machine learning models simpler, easier to scale, and easier to manage. 
 
 In this blog post, we will explore how data scientists can use Docker for the deployment process of machine learning models. We’ll discuss creating a simple model, containerizing it with Docker and deploying it using Docker Compose for a Jupyter Notebook environment. Whether you are looking to improve your workflow, share models with others, or scale your machine learning models, Docker provides an efficient way to manage all of these. By the end, hopefully, you will get a solid understanding of how to use Docker to deploy machine learning models to production. 
@@ -15,17 +15,18 @@ In this blog post, we will explore how data scientists can use Docker for the de
 
 # What is Docker and why use Docker in Machine Learning
 ### Docker Basics
-Docker is a platform that uses containers to package and distribute applications and their dependencies. Containers are another way to generate and share individual computational environments. They are even more isolated from the computer operating system and can be used to share many types of software, applications and operating system dependencies. Whether your code runs on your local computer, on a colleague's computer, or in the cloud, the behavior of the application remains the same. A Docker container includes everything needed to run an application, including the code, libraries, environment variables, and dependencies. Containers are lightweight, portable, and consistent, which makes them ideal for deploying machine learning models.
+Docker is a platform that uses containers to package and distribute applications and their dependencies. Containers are another way to generate and share individual computational environments. They can be used to share many types of software, applications and operating system dependencies. Whether your code runs on your local computer, on a colleague's computer, or in the cloud, we need the application to behave the same way. This is where Docker containers come in! A Docker container includes everything needed to run an application, including the code, libraries, environment variables, and dependencies. Containers are lightweight, portable, and consistent, which makes them ideal for deploying machine learning models.
 
-A central concept in Docker is the Docker image. A Docker image is a template used to create containers. An image contains the application code, and the environment configurations needed to run the application. Once you create a Docker image for your machine learning model, you can share it, run it anywhere, and more importantly it will behave consistently, regardless of where it’s deployed.
+A fundamental concept in Docker is the Docker image. A Docker image is a template used to create containers. An image contains the application code, and the environment configurations needed to run the application. Once you create a Docker image for your machine learning model, you can share it, run it anywhere, and most importantly it will behave consistently, regardless of where it’s deployed. You might be wondering, how does this apply to machine learning models? Next we will talk about the benefits and applications in machine learning!
 
 ### Benefits for Machine Learning
 Docker offers many advantages for deploying machine learning models that make it a powerful tool for all data scientists:
 -	Environment Consistency: Docker ensures that the environment in which the model is trained is identical to the environment where it will be deployed.
 -	Simplified Dependency Management: Machine learning models often depend on many specific libraries and versions of Python. Docker makes it easy to ensure that these
 dependencies are consistent and available.
--	Scalability: Docker containers are lightweight, which makes it easier to scale applications horizontally, running multiple instances of a model to handle more
-requests.
+-	Scalability: Docker containers are lightweight, which makes it easier to scale applications horizontally, running multiple instances of a model to handle more requests. 
+
+The image below shows how widely used Docker is in industry! Next let's go ahead and set up Docker!
 
 <img src="Docker-associated-tools.jpg" alt="Docker Popularity" width="800"/>
 
@@ -47,7 +48,7 @@ Once installed, verify Docker is working by running the following command:
 docker --version
 ```
 
-Now you’ll be able to use Docker’s powerful capabilities to deploy machine learning models! Now let’s build, train, and deploy a model!
+Now that Docker is installed, you’ll be able to use all of Docker’s applications to deploy machine learning models! Now we are ready to build, train, and deploy a model!
 
 ### Step 2: Create a Dockerfile
 
@@ -68,6 +69,7 @@ RUN fix-permissions "/home/${NB_USER}"
 
 This Dockerfile starts with a Jupyter notebook base image and sets up the environment by installing dependencies from a conda lock file. For more information on Conda lock files, see [here](https://github.com/conda/conda-lock). In addition, it uses `mamba` which is a fast package manager. Dockerfiles can be customized to fit any environment, making them very flexible and versatile.
 
+The image below shows the general Docker workflow! 
 
 ![Docker Workflow Diagram](Docker%20workflow.png)
 Source: [Docker Workflow](https://medium.com/@augustineozor/docker-workflow-b9fe71d32184)
@@ -93,14 +95,14 @@ model = RandomForestClassifier()
 model.fit(X_train, y_train)
 
 # Save the model 
-# You can use any method to save the model, e.g., using pickle or directly saving as part of your application
+# You can use any method to save the model, e.g., using pickle or directly saving the python file
 
 ```
 
 
 ### Step 2: Dockerize and Deploy with Jupyter Notebook Using Docker Compose
 
-Next, we will use Docker Compose to simplify running the Jupyter Notebook environment. Docker Compose will deploy the environment, and you can create a docker-compose.yml file to run a Jupyter notebook, where you can interactively work with your trained model. This makes launching and managing much simpler. Docker compose uses a YAML file, named docker-compose.yml, to record how the container should be launched. This file includes details on the docker image, the version to use, how to mount volumes, and what ports to map. 
+Next, we will use Docker Compose to simplify running the Jupyter Notebook environment. Docker Compose will deploy the environment, and you can create a docker-compose.yml file to run a Jupyter notebook, where you can interactively work with your trained model. This makes launching and managing much simpler. As mentioned, Docker compose uses a YAML file, named docker-compose.yml, to record how the container should be launched. This file includes details on the docker image, the version to use, how to mount volumes, and what ports to map. 
 
 Here’s an example of how to set up a Jupyter Notebook container using Docker Compose:
 
@@ -115,7 +117,7 @@ services:
     platform: linux/amd64
 ```
 
-In this file, we define a single service (jupyter-notebook) that runs a Jupyter Notebook instance. The service maps port 8888 on the host machine to port 8888 on the container, making it accessible via a browser. We also mount the current directory (.) to the /home/jovyan directory inside the container, so we can interact with our files.
+In this file, we define a single service (jupyter-notebook) that runs a Jupyter Notebook instance. Then this service maps port 8888 on the host machine to port 8888 on the container, making it accessible via a browser. We also mount the current directory (.) to the /home/jovyan directory inside the container, so we can interact with our current files on our local machine.
 
 Once you’ve set up the `docker-compose.yml` file, you can run the following command to start the Jupyter Notebook environment:
 ```{bash}
@@ -123,6 +125,8 @@ docker-compose up
 ```
 
 This will start the Jupyter Notebook container, and you can open a browser and access it at http://localhost:8888.
+
+In this Jupyter Notebook container, you can open your python script from before and now it is running within the Docker container! You can work independetly in this Jupyter Notebook container and easily share with friends, collegues, or further deploy.
 
 To exit and clean up the container:
 
@@ -135,7 +139,7 @@ To exit and clean up the container:
 Versioning your machine learning models, and Docker images is essential to ensuring the best reproducibility. 
 You can use tags in Docker to keep track of different versions of the model and the environment. This makes it easy to track changes 
 and revert to previous versions if needed.
-Docker tags are a powerful way to version and manage your Docker images. By tagging your images, you can easily differentiate between 
+Docker tags are a useful way to version and manage your Docker images. By tagging your images, you can easily differentiate between 
 different versions of your environment, ensuring that you know which version is running in production and which version is used for testing or development. 
 Tags allow you to mark a specific image with a version number or other identifier that makes it easier to roll back or update your containers. 
 
@@ -148,8 +152,7 @@ In this example, the image is tagged as v1.0, and you can easily refer to this v
 
 ### Docker Image Links to Docker Hub
 Docker Hub is a online repository where Docker images are stored and shared. Similar to GitHub. Once you’ve built a Docker image for your machine learning model, 
-you can push it to Docker Hub, making it accessible from anywhere and allowing others to pull and use it.
-
+you can push it to Docker Hub, making it accessible from anywhere and allowing others to pull and use it. You will need to create an account [here](https://app.docker.com/signup). Now you are able to upload your image for others to utilize as well. 
 To upload your Docker image to Docker Hub, you need to:
 
 1. Create a Docker Hub account and log in using the docker login command.
@@ -166,10 +169,10 @@ docker push myusername/my_ml_model:v1.0
 
 
 ### Managing Dependencies
-It is best practice to use a `conda` environment file or `conda lock` file to specify all the dependencies required by your model. This ensures that Docker will install the exact dependencies needed to run your model, avoiding compatibility issues between your development and production environments.
+Sharing environments can be difficult, and we often run into dependency and compatibility issues when trying to share environments or files with others. It is best practice to use a `conda` environment file or `conda lock` file to specify all the dependencies your model requires. This ensures that Docker will install the exact dependencies needed to run your model, avoiding compatibility issues between your development and production environments.
 
 ### Security Considerations
-When deploying models, security should always be a priority. Whether that be for yourself, a customer, or a company. Avoid adding sensitive information like API keys, passwords, or access tokens directly into Docker images. 
+When deploying models, security should always be a priority. Whether that be for yourself, a customer, or a company. Avoid adding sensitive information like API keys, passwords, or access tokens directly into Docker images. You do not want this information to be made public! 
 
 # Conclusion
 In this blog post, we’ve learned how to build, train, and deploy a machine learning model using Docker. By containerizing your models and using Docker Compose, we can
