@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "ML Docker Blog"
+  title: "DSCI 542 Blog"
   navbar:
     right:
       - about.qmd

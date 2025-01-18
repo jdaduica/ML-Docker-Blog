@@ -1,5 +1,5 @@
 ---
-title: "ML Docker Blog"
+title: "DSCI 542 Blog"
 listing:
   contents: posts
   sort: "date desc"
