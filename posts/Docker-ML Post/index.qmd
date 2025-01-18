@@ -123,11 +123,42 @@ To exit and clean up the container:
 
 # Best Practices for Machine Learning Deployment with Docker
 
-### Versioning Models
-Versioning your machine learning models, and Docker images is essential to ensuring the best reproducibility. You can use tags in Docker to keep track of different versions of the model and the environment. This makes it easy to track changes and revert to previous versions if needed.
+### Docker Tags and Versioning Models
+Versioning your machine learning models, and Docker images is essential to ensuring the best reproducibility. 
+You can use tags in Docker to keep track of different versions of the model and the environment. This makes it easy to track changes 
+and revert to previous versions if needed.
+Docker tags are a powerful way to version and manage your Docker images. By tagging your images, you can easily differentiate between 
+different versions of your environment, ensuring that you know which version is running in production and which version is used for testing or development. 
+Tags allow you to mark a specific image with a version number or other identifier that makes it easier to roll back or update your containers. 
+
+For example, you can tag your image with a version number or date to indicate different stages of your deployment:
+```{bash}
+docker build -t my_ml_model:v1.0 .
+```
+
+In this example, the image is tagged as v1.0, and you can easily refer to this version when running your container or sharing it with others.
+
+### Docker Image Links to Docker Hub
+Docker Hub is a online repository where Docker images are stored and shared. Similar to GitHub. Once you’ve built a Docker image for your machine learning model, 
+you can push it to Docker Hub, making it accessible from anywhere and allowing others to pull and use it.
+
+To upload your Docker image to Docker Hub, you need to:
+
+1. Create a Docker Hub account and log in using the docker login command.
+2. Tag your image with your Docker Hub username and a repository name:
+```{bash}
+docker tag my_ml_model myusername/my_ml_model:v1.0
+```
+
+3. Push the image to Docker Hub
+```{bash}
+docker push myusername/my_ml_model:v1.0
+```
+
+
 
 ### Managing Dependencies
-It’s best practice to use a `conda` environment file or `conda lock` file to specify all the dependencies required by your model. This ensures that Docker will install the exact dependencies needed to run your model, avoiding compatibility issues between your development and production environments.
+It is best practice to use a `conda` environment file or `conda lock` file to specify all the dependencies required by your model. This ensures that Docker will install the exact dependencies needed to run your model, avoiding compatibility issues between your development and production environments.
 
 ### Security Considerations
 When deploying models, security should always be a priority. Whether that be for yourself, a customer, or a company. Avoid adding sensitive information like API keys, passwords, or access tokens directly into Docker images. 
